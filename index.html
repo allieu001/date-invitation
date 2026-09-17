@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Go On A Date With Me?</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; display:flex; justify-content:center; align-items:center;
+  font-family:Arial, sans-serif; background:linear-gradient(135deg,#fff,#ffd6e7);
+  color:#d6336c; overflow:hidden;
+}
+.card{
+  width:min(92%,480px); min-height:560px; background:rgba(255,255,255,.96);
+  border-radius:28px; padding:34px 25px; text-align:center;
+  box-shadow:0 18px 50px rgba(214,51,108,.2); position:relative;
+}
+.page{display:none; animation:fade .35s ease}.page.active{display:block}
+h1{font-size:32px;margin:55px 0 35px}.heart{font-size:58px;animation:pulse 1.2s infinite}
+button{
+  border:0;border-radius:14px;padding:14px 24px;font-size:17px;font-weight:bold;
+  cursor:pointer; transition:.2s;
+}
+.primary{background:#e83e78;color:white}.secondary{background:#fff;color:#d6336c;border:2px solid #f2a2bd}
+.buttons{display:flex;justify-content:center;gap:16px;align-items:center;position:relative;min-height:90px}
+#yes{transform:scale(1.8);z-index:2}
+#no{position:relative;z-index:3}
+label{display:block;text-align:left;margin:15px 0 7px;font-weight:bold}
+input,select,textarea{
+ width:100%;padding:13px;border:2px solid #f3bfd0;border-radius:12px;
+ font-size:16px;outline:none;background:white
+}
+textarea{height:90px;resize:none}.options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+.date-option{padding:15px 8px;background:#fff;border:2px solid #f3bfd0;color:#d6336c}
+.date-option.selected{background:#ffd6e7;border-color:#e83e78}
+.next{width:100%;margin-top:12px}.summary{background:#fff5f8;padding:18px;border-radius:16px;text-align:left;line-height:1.7}
+.small{font-size:13px;color:#a95a78}.success{font-size:22px;font-weight:bold}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pulse{50%{transform:scale(1.1)}}
+</style>
+</head>
+<body>
+<div class="card">
+
+<section class="page active" id="page1">
+  <div class="heart">💗</div>
+  <h1>Can you go on a date with me?</h1>
+  <div class="buttons">
+    <button class="primary" id="yes">Yes</button>
+    <button class="secondary" id="no">No</button>
+  </div>
+  <p class="small">Choose carefully 😌💕</p>
+</section>
+
+<section class="page" id="page2">
+  <h1>Pick a Date & Time 📅</h1>
+  <label for="date">Date</label><input id="date" type="date">
+  <label for="time">Time</label><input id="time" type="time">
+  <button class="primary next" onclick="go(3)">Continue 💕</button>
+</section>
+
+<section class="page" id="page3">
+  <h1>What kind of date? 💕</h1>
+  <div class="options">
+    <button class="date-option" onclick="choose(this,'Coffee')">☕ Coffee</button>
+    <button class="date-option" onclick="choose(this,'Club')">🎶 Club</button>
+    <button class="date-option" onclick="choose(this,'Restaurant')">🍽️ Restaurant</button>
+    <button class="date-option" onclick="choose(this,'Late night walk')">🌙 Late night walk</button>
+    <button class="date-option" onclick="choose(this,'Beach')">🏖️ Beach</button>
+    <button class="date-option" onclick="choose(this,'Other')">✨ Any other</button>
+  </div>
+  <textarea id="other" placeholder="If you chose Any other, write it here..."></textarea>
+  <button class="primary next" onclick="finish()">Continue 💗</button>
+</section>
+
+<section class="page" id="page4">
+  <div class="heart">🥰</div>
+  <h1>Thank You! 💕</h1>
+  <p>I can't wait for our date.</p>
+  <div class="summary" id="summary"></div>
+  <button class="primary next" onclick="sendDate()">Send 💌</button>
+  <p id="sent" class="success"></p>
+</section>
+
+</div>
+
+<script>
+let selected = "";
+
+function go(n){
+  if(n===3 && (!document.getElementById("date").value || !document.getElementById("time").value)){
+    alert("Please choose a date and time first 💕"); return;
+  }
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page"+n).classList.add("active");
+}
+
+document.getElementById("yes").onclick=()=>go(2);
+
+const no=document.getElementById("no");
+function moveNo(){
+  const card=document.querySelector(".card").getBoundingClientRect();
+  const btn=no.getBoundingClientRect();
+  const maxX=Math.max(10, card.width-btn.width-20);
+  const maxY=180;
+  no.style.position="absolute";
+  no.style.left=(10+Math.random()*maxX)+"px";
+  no.style.top=(20+Math.random()*maxY)+"px";
+}
+["mouseenter","touchstart","click"].forEach(e=>no.addEventListener(e,(ev)=>{
+  ev.preventDefault(); moveNo();
+}));
+
+function choose(btn,value){
+  document.querySelectorAll(".date-option").forEach(b=>b.classList.remove("selected"));
+  btn.classList.add("selected"); selected=value;
+}
+function finish(){
+  if(!selected){alert("Please choose a type of date 💕");return}
+  if(selected==="Other" && !document.getElementById("other").value.trim()){
+    alert("Tell me what kind of date you have in mind 💕");return;
+  }
+  const date=document.getElementById("date").value;
+  const time=document.getElementById("time").value;
+  const type=selected==="Other"?document.getElementById("other").value.trim():selected;
+  document.getElementById("summary").innerHTML=
+    "<b>Date:</b> "+date+"<br><b>Time:</b> "+time+"<br><b>Type:</b> "+type;
+  go(4);
+}
+function sendDate(){
+  document.getElementById("sent").textContent="Sent! 💌💕";
+}
+</script>
+</body>
+</html>
