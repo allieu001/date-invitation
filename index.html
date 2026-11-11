@@ -1,16 +1,154 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A Date With Me? 💗</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Date With Me? 💗</title>
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;background:linear-gradient(135deg,#fff,#ffd9e8);font-family:Arial,sans-serif;color:#d6336c;padding:15px 0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}.card{width:min(94vw,500px);min-height:0;margin:auto;background:#fff;border-radius:30px;padding:28px 24px;text-align:center;box-shadow:0 20px 55px #d6336c33;flex-shrink:0}.page{display:none}.active{display:block}h1{font-size:31px;line-height:1.2;margin:25px 0 35px}.heart{font-size:60px;margin-top:18px}.buttons{height:150px;position:relative;display:flex;justify-content:center;align-items:center;gap:45px}button{border-radius:14px;padding:14px 23px;font-size:17px;font-weight:bold;cursor:pointer}.yes{background:#e83e78;color:#fff;border:0;transform:scale(1.8);z-index:2}.no{background:#fff;color:#d6336c;border:2px solid #efa4bd}.noWrap{position:relative;z-index:3}.laugh{position:absolute;right:-31px;top:-12px;font-size:24px}label{display:block;text-align:left;font-weight:bold;margin:15px 0 7px}input,textarea{width:100%;padding:14px;border:2px solid #f1bfd0;border-radius:12px;font-size:16px}textarea{height:85px;resize:none}.options{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:18px 0}.option{background:#fff;color:#d6336c;border:2px solid #f1bfd0}.selected{background:#ffd9e7!important;border-color:#e83e78!important}.primary{background:#e83e78;color:#fff;border:0;width:100%;margin-top:17px}.summary{background:#fff5f8;padding:16px;border-radius:15px;text-align:left;line-height:1.8;margin:17px 0}.thanks{line-height:1.6}.small{font-size:13px;color:#9b6078}.successTitle{font-size:34px;margin-bottom:15px}
-</style></head><body><div class="card">
-<section class="page active" id="p1"><div class="heart">💗</div><h1>Can you go on a date with me?</h1><div class="buttons"><button class="yes" onclick="show(2)">Yes</button><div class="noWrap" id="nw"><button class="no" id="no">No</button><span class="laugh">😂</span></div></div><p class="small">There is only one correct answer 😌💕</p></section>
-<section class="page" id="p2"><div class="heart">📅</div><h1>Choose the Date & Time</h1><label>Date</label><input id="date" type="date"><label>Time</label><input id="time" type="time"><button class="primary" onclick="page3()">Continue 💕</button></section>
-<section class="page" id="p3"><div class="heart">🥰</div><h1>What type of date?</h1><div class="options"><button class="option" onclick="pick(this,'Coffee')">☕ Coffee</button><button class="option" onclick="pick(this,'Club')">🎶 Club</button><button class="option" onclick="pick(this,'Restaurant')">🍽️ Restaurant</button><button class="option" onclick="pick(this,'Late night walk')">🌙 Late night walk</button><button class="option" onclick="pick(this,'Beach')">🏖️ Beach</button><button class="option" onclick="pick(this,'Any other')">✨ Any other</button></div><textarea id="other" placeholder="If Any other, write it here..."></textarea><button class="primary" onclick="finish()">Continue 💗</button></section>
-<section class="page" id="p4"><div class="heart">💖</div><h1>Thank You, Beautiful! 🥰</h1><div class="thanks"><p>Thank you for saying yes to spending some special time with me. 💕</p><p>I’m really looking forward to creating a beautiful memory together — whether our date is simple, romantic, fun, adventurous, or completely unexpected. ✨</p><p>I promise to come with a good mood, plenty of smiles, and make the day something worth remembering. ❤️</p><p>Now all that is left is for us to make it happen. I can't wait to see you! 😘🌹</p></div><div class="summary" id="sum"></div><button class="primary" id="send" onclick="sendResponse()">Send 💌</button><p class="small" id="status">Your response will be sent to my email. 💗</p></section>
-<section class="page" id="p5"><div class="heart">💌</div><h1 class="successTitle">Response Sent! ❤️</h1><p>Thank you for choosing to go on a date with me. 🥰</p><p>Your date details have been sent successfully. I’ll see you soon! 💕🌹</p><p>Now you can sit back, smile, and wait for our date. 😘</p></section></div>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;background:linear-gradient(135deg,#fff,#ffd9e8);font-family:Arial,sans-serif;color:#d6336c;padding:15px 0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.card{width:min(94vw,500px);min-height:0;margin:auto;background:#fff;border-radius:30px;padding:28px 24px;text-align:center;box-shadow:0 20px 55px #d6336c33;flex-shrink:0}
+.page{display:none}.active{display:block}
+h1{font-size:31px;line-height:1.2;margin:25px 0 28px}
+.heart{font-size:60px;margin-top:18px}
+.buttons{height:150px;position:relative;display:flex;justify-content:center;align-items:center;gap:45px}
+button{border-radius:14px;padding:14px 23px;font-size:17px;font-weight:bold;cursor:pointer}
+.yes{background:#e83e78;color:#fff;border:0;transform:scale(1.8);z-index:2}
+.no{background:#fff;color:#d6336c;border:2px solid #efa4bd}
+.noWrap{position:relative;z-index:3}.laugh{position:absolute;right:-31px;top:-12px;font-size:24px}
+label{display:block;text-align:left;font-weight:bold;margin:15px 0 7px}
+input,textarea{width:100%;padding:14px;border:2px solid #f1bfd0;border-radius:12px;font-size:16px}
+textarea{height:85px;resize:none}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:18px 0}
+.option{background:#fff;color:#d6336c;border:2px solid #f1bfd0}
+.selected{background:#ffd9e7!important;border-color:#e83e78!important}
+.primary{background:#e83e78;color:#fff;border:0;width:100%;margin-top:17px}
+.summary{background:#fff5f8;padding:16px;border-radius:15px;text-align:left;line-height:1.8;margin:17px 0}
+.thanks{line-height:1.6}.small{font-size:13px;color:#9b6078}
+.successTitle{font-size:34px;margin-bottom:15px}
+</style>
+</head>
+<body>
+<div class="card">
+<section class="page active" id="p1">
+<div class="heart">💗</div>
+<h1>Can you go on a date with me?</h1>
+<label for="guestName">First, what's your name? 💕</label>
+<input id="guestName" type="text" maxlength="60" placeholder="Enter your name">
+<div class="buttons">
+<button class="yes" onclick="startInvitation()">Yes</button>
+<div class="noWrap" id="nw"><button class="no" id="no">No</button><span class="laugh">😂</span></div>
+</div>
+<p class="small">There is only one correct answer 😌💕</p>
+</section>
+
+<section class="page" id="p2">
+<div class="heart">📅</div><h1>Choose the Date & Time</h1>
+<label for="date">Date</label><input id="date" type="date">
+<label for="time">Time</label><input id="time" type="time">
+<button class="primary" onclick="page3()">Continue 💕</button>
+</section>
+
+<section class="page" id="p3">
+<div class="heart">🥰</div><h1>What type of date?</h1>
+<div class="options">
+<button class="option" onclick="pick(this,'Coffee')">☕ Coffee</button>
+<button class="option" onclick="pick(this,'Club')">🎶 Club</button>
+<button class="option" onclick="pick(this,'Restaurant')">🍽️ Restaurant</button>
+<button class="option" onclick="pick(this,'Late night walk')">🌙 Late night walk</button>
+<button class="option" onclick="pick(this,'Beach')">🏖️ Beach</button>
+<button class="option" onclick="pick(this,'Any other')">✨ Any other</button>
+</div>
+<textarea id="other" placeholder="If Any other, write it here..."></textarea>
+<button class="primary" onclick="finish()">Continue 💗</button>
+</section>
+
+<section class="page" id="p4">
+<div class="heart">💖</div><h1>Thank You, Beautiful! 🥰</h1>
+<div class="thanks">
+<p>Thank you for saying yes to spending some special time with me. 💕</p>
+<p>I’m really looking forward to creating a beautiful memory together — whether our date is simple, romantic, fun, adventurous, or completely unexpected. ✨</p>
+<p>I promise to come with a good mood, plenty of smiles, and make the day something worth remembering. ❤️</p>
+<p>Now all that is left is for us to make it happen. I can't wait to see you! 😘🌹</p>
+</div>
+<div class="summary" id="sum"></div>
+<button class="primary" id="send" onclick="sendResponse()">Send 💌</button>
+<p class="small" id="status">Your response will be sent to my email. 💗</p>
+</section>
+
+<section class="page" id="p5">
+<div class="heart">💌</div><h1 class="successTitle">Response Sent! ❤️</h1>
+<p id="personalThanks">Thank you for choosing to go on a date with me. 🥰</p>
+<p>Your date details have been sent successfully. I’ll see you soon! 💕🌹</p>
+<p>Now you can sit back, smile, and wait for our date. 😘</p>
+</section>
+</div>
+
 <script>
-let chosen='';function show(n){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('p'+n).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-const no=document.getElementById('no'),nw=document.getElementById('nw');function run(e){e.preventDefault();let c=document.querySelector('.card').getBoundingClientRect(),w=nw.getBoundingClientRect();nw.style.position='absolute';nw.style.left=(10+Math.random()*Math.max(10,c.width-w.width-20))+'px';nw.style.top=(25+Math.random()*110)+'px'}['mouseenter','touchstart','pointerdown','click'].forEach(x=>no.addEventListener(x,run));
-function page3(){if(!date.value||!time.value)return alert('Please choose both the date and time 💕');show(3)}function pick(b,v){document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');chosen=v}
-function finish(){if(!chosen)return alert('Please choose a type of date 💕');if(chosen==='Any other'&&!other.value.trim())return alert('Tell me what kind of date you have in mind 💕');let t=chosen==='Any other'?other.value.trim():chosen;sum.innerHTML='<b>📅 Date:</b> '+date.value+'<br><b>⏰ Time:</b> '+time.value+'<br><b>💕 Date type:</b> '+t;show(4)}
-async function sendResponse(){const btn=document.getElementById('send'),status=document.getElementById('status');btn.disabled=true;btn.textContent='Sending... 💌';status.textContent='Sending your response...';let data=new FormData();data.append('Date',date.value);data.append('Time',time.value);data.append('Type of Date',chosen);data.append('Custom Choice',other.value.trim());data.append('_subject','💕 New Date Invitation Response');data.append('_captcha','false');data.append('_template','table');try{let r=await fetch('https://formsubmit.co/ajax/tamallieu9@gmail.com',{method:'POST',body:data,headers:{'Accept':'application/json'}});if(!r.ok)throw Error('send failed');show(5)}catch(e){btn.disabled=false;btn.textContent='Send 💌';status.textContent='Something went wrong. Please try again.'}}
-</script></body></html>
+let chosen='';
+function show(n){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('p'+n).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function startInvitation(){
+  const name=document.getElementById('guestName').value.trim();
+  if(!name){alert('Please enter your name first 💕');return;}
+  show(2);
+}
+const no=document.getElementById('no'),nw=document.getElementById('nw');
+function run(e){
+  e.preventDefault();
+  let c=document.querySelector('.card').getBoundingClientRect(),w=nw.getBoundingClientRect();
+  nw.style.position='absolute';
+  nw.style.left=(10+Math.random()*Math.max(10,c.width-w.width-20))+'px';
+  nw.style.top=(25+Math.random()*110)+'px';
+}
+['mouseenter','touchstart','pointerdown','click'].forEach(x=>no.addEventListener(x,run));
+function page3(){
+  if(!date.value||!time.value)return alert('Please choose both the date and time 💕');
+  show(3);
+}
+function pick(b,v){
+  document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));
+  b.classList.add('selected');chosen=v;
+}
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function finish(){
+  if(!chosen)return alert('Please choose a type of date 💕');
+  if(chosen==='Any other'&&!other.value.trim())return alert('Tell me what kind of date you have in mind 💕');
+  const name=document.getElementById('guestName').value.trim();
+  const type=chosen==='Any other'?other.value.trim():chosen;
+  document.getElementById('sum').innerHTML=
+    '<b>🙋 Name:</b> '+escapeHtml(name)+
+    '<br><b>📅 Date:</b> '+escapeHtml(date.value)+
+    '<br><b>⏰ Time:</b> '+escapeHtml(time.value)+
+    '<br><b>💕 Date type:</b> '+escapeHtml(type);
+  document.getElementById('personalThanks').textContent='Thank you, '+name+', for choosing to go on a date with me. 🥰';
+  show(4);
+}
+async function sendResponse(){
+  const btn=document.getElementById('send'),status=document.getElementById('status');
+  btn.disabled=true;btn.textContent='Sending... 💌';status.textContent='Sending your response...';
+  const data=new FormData();
+  data.append('Name',document.getElementById('guestName').value.trim());
+  data.append('Date',date.value);data.append('Time',time.value);
+  data.append('Type of Date',chosen);data.append('Custom Choice',other.value.trim());
+  data.append('_subject','💕 New Date Invitation Response');
+  data.append('_captcha','false');data.append('_template','table');
+  try{
+    const response=await fetch('https://formsubmit.co/ajax/tamallieu9@gmail.com',{
+      method:'POST',body:data,headers:{'Accept':'application/json'}
+    });
+    if(!response.ok)throw new Error('send failed');
+    show(5);
+  }catch(error){
+    btn.disabled=false;btn.textContent='Send 💌';
+    status.textContent='Something went wrong. Please try again.';
+  }
+}
+</script>
+</body>
+</html>
